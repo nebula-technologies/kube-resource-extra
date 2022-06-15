@@ -6,7 +6,7 @@ authors = ["Anders Blenstrup-Pedersen <abp-git@ryuu.technology>"]
 description = "Kubernetes Resource Extras"
 readme = "README.md"
 categories = [""]
-keywords = ["Kubernetes", "CustomResourceDefinition"]
+keywords = ["Kubernetes", "CRD", "CustomResource"]
 license = "MIT"
 repository = "https://github.com/nebula-technologies/kube-resource-extra"
 
