@@ -6,13 +6,13 @@ use std::time::Duration;
 pub struct HTTPCookie {
     // Name of the cookie.
     // Yes
-    name: String,
+    pub name: String,
 
     // Path to set for the cookie.
     // No
-    path: Option<String>,
+    pub path: Option<String>,
 
     // Lifetime of the cookie.
     // Yes
-    ttl: Duration,
+    pub ttl: Duration,
 }

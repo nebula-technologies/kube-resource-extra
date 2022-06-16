@@ -366,11 +366,13 @@ impl Metadata for EnvoyFilter {
 pub struct EnvoyFilterSpec {
     // Criteria used to select the specific set of pods/VMs on which this patch configuration should be applied. If omitted, the set of patches in this configuration will be applied to all workload instances in the same namespace. If omitted, the EnvoyFilter patches will be applied to all workloads in the same namespace. If the EnvoyFilter is present in the config root namespace, it will be applied to all applicable workloads in any namespace.
     // No
-    workloadSelector: Option<WorkloadSelector>,
+    #[serde(rename = "workloadSelector")]
+    pub workload_selector: Option<WorkloadSelector>,
 
     // One or more patches with match conditions.
     // Yes
-    configPatches: Vec<EnvoyConfigObjectPatch>,
+    #[serde(rename = "configPatches")]
+    pub config_patches: Vec<EnvoyConfigObjectPatch>,
 
     // Priority defines the order in which patch sets are applied within a context. When one patch depends on another patch, the order of patch application is significant. The API provides two primary ways to order patches. Patch sets in the root namespace are applied before the patch sets in the workload namespace. Patches within a patch set are processed in the order that they appear in the configPatches list.
     //
@@ -380,7 +382,7 @@ pub struct EnvoyFilterSpec {
     //
     // Patch sets are sorted in the following ascending key order: priority, creation time, fully qualified resource name.
     // No
-    priority: Option<i32>,
+    pub priority: Option<i32>,
 }
 
 /// # ProxyMatch
@@ -389,11 +391,12 @@ pub struct EnvoyFilterSpec {
 pub struct ProxyMatch {
     // A regular expression in golang regex format (RE2) that can be used to select proxies using a specific version of istio proxy. The Istio version for a given proxy is obtained from the node metadata field ISTIO_VERSION supplied by the proxy when connecting to Pilot. This value is embedded as an environment variable (ISTIO_META_ISTIO_VERSION) in the Istio proxy docker image. Custom proxy implementations should provide this metadata variable to take advantage of the Istio version check option.
     // No
-    proxyVersion: Option<String>,
+    #[serde(rename = "proxyVersion")]
+    pub proxy_version: Option<String>,
 
     // Match on the node metadata supplied by a proxy when connecting to Istio Pilot. Note that while Envoy’s node metadata is of type Struct, only string key-value pairs are processed by Pilot. All keys specified in the metadata must match with exact values. The match will fail if any of the specified keys are absent or the values fail to match.
     // No
-    metadata: Option<HashMap<String, String>>,
+    pub metadata: Option<HashMap<String, String>>,
 }
 
 /// # ClusterMatch
@@ -402,19 +405,20 @@ pub struct ProxyMatch {
 pub struct ClusterMatch {
     // The service port for which this cluster was generated. If omitted, applies to clusters for any port. Note: for inbound cluster, it is the service target port.
     // No
-    portNumber: Option<u32>,
+    #[serde(rename = "portNumber")]
+    pub port_number: Option<u32>,
 
     // The fully qualified service name for this cluster. If omitted, applies to clusters for any service. For services defined through service entries, the service name is same as the hosts defined in the service entry. Note: for inbound cluster, this is ignored.
     // No
-    service: Option<String>,
+    pub service: Option<String>,
 
     // The subset associated with the service. If omitted, applies to clusters for any subset of a service.
     // No
-    subset: Option<String>,
+    pub subset: Option<String>,
 
     // The exact name of the cluster to match. To match a specific cluster by name, such as the internally generated Passthrough cluster, leave all fields in clusterMatch empty, except the name.
     // No
-    name: Option<String>,
+    pub name: Option<String>,
 }
 
 /// # RouteConfigurationMatch
@@ -423,23 +427,25 @@ pub struct ClusterMatch {
 pub struct RouteConfigurationMatch {
     // The service port number or gateway server port number for which this route configuration was generated. If omitted, applies to route configurations for all ports.
     // No
-    portNumber: Option<u32>,
+    #[serde(rename = "portNumber")]
+    pub port_number: Option<u32>,
 
     // Applicable only for GATEWAY context. The gateway server port name for which this route configuration was generated.
     // No
-    portName: Option<String>,
+    #[serde(rename = "portName")]
+    pub port_name: Option<String>,
 
     // The Istio gateway config’s namespace/name for which this route configuration was generated. Applies only if the context is GATEWAY. Should be in the namespace/name format. Use this field in conjunction with the portNumber and portName to accurately select the Envoy route configuration for a specific HTTPS server within a gateway config object.
     // No
-    gateway: Option<String>,
+    pub gateway: Option<String>,
 
     // Match a specific virtual host in a route configuration and apply the patch to the virtual host.
     // No
-    vhost: Option<VirtualHostMatch>,
+    pub vhost: Option<VirtualHostMatch>,
 
     // Route configuration name to match on. Can be used to match a specific route configuration by name, such as the internally generated http_proxy route configuration for all sidecars.
     // No
-    name: Option<String>,
+    pub name: Option<String>,
 }
 
 /// # ListenerMatch
@@ -448,15 +454,17 @@ pub struct RouteConfigurationMatch {
 pub struct ListenerMatch {
     // The service port/gateway port to which traffic is being sent/received. If not specified, matches all listeners. Even though inbound listeners are generated for the instance/pod ports, only service ports should be used to match listeners.
     // No
-    portNumber: Option<u32>,
+    #[serde(rename = "portNumber")]
+    pub port_number: Option<u32>,
 
     // Match a specific filter chain in a listener. If specified, the patch will be applied to the filter chain (and a specific filter if specified) and not to other filter chains in the listener.
     // No
-    filterChain: Option<FilterChainMatch>,
+    #[serde(rename = "filterChain")]
+    pub filter_chain: Option<FilterChainMatch>,
 
     // Match a specific listener by its name. The listeners generated by Pilot are typically named as IP:Port.
     // No
-    name: Option<String>,
+    pub name: Option<String>,
 }
 
 pub mod patch {
@@ -511,15 +519,16 @@ pub mod patch {
 pub struct Patch {
     // Determines how the patch should be applied.
     // No
-    operation: Option<Operation>,
+    pub operation: Option<Operation>,
 
     // The JSON config of the object being patched. This will be merged using proto merge semantics with the existing proto in the path.
     // No
-    value: Option<Struct>,
+    pub value: Option<Struct>,
 
     // Determines the filter insertion order.
     // No
-    filterClass: Option<FilterClass>,
+    #[serde(rename = "filterClass")]
+    pub filter_class: Option<FilterClass>,
 }
 
 /// # EnvoyConfigObjectMatch
@@ -573,15 +582,16 @@ pub enum EnvoyConfigObjectMatch {
 pub struct EnvoyConfigObjectPatch {
     // Specifies where in the Envoy configuration, the patch should be applied. The match is expected to select the appropriate object based on applyTo. For example, an applyTo with HTTP_FILTER is expected to have a match condition on the listeners, with a network filter selection on envoy.filters.network.http_connection_manager and a sub filter selection on the HTTP filter relative to which the insertion should be performed. Similarly, an applyTo on CLUSTER should have a match (if provided) on the cluster and not on a listener.
     // No
-    applyTo: ApplyTo,
+    #[serde(rename = "applyTo")]
+    pub apply_to: ApplyTo,
 
     // Match on listener/route configuration/cluster.
     // No
-    r#match: EnvoyConfigObjectMatch,
+    pub r#match: EnvoyConfigObjectMatch,
 
     // The patch to apply along with the operation.
     // No
-    patch: Patch,
+    pub patch: Patch,
 }
 
 pub mod route_configuration_match {
@@ -612,11 +622,11 @@ pub mod route_configuration_match {
     pub struct RouteMatch {
         // The Route objects generated by default are named as default.Route objects generated using a virtual service will carry the name used in the virtual service’s HTTP routes.
         // No
-        name: String,
+        pub name: String,
 
         // Match a route with specific action type.
         // No
-        action: Action,
+        pub action: Action,
     }
 
     /// # VirtualHostMatch
@@ -625,11 +635,11 @@ pub mod route_configuration_match {
     pub struct VirtualHostMatch {
         // The VirtualHosts objects generated by Istio are named as host:port, where the host typically corresponds to the VirtualService’s host field or the hostname of a service in the registry.
         // No
-        name: String,
+        pub name: String,
 
         // Match a specific route within the virtual host.
         // No
-        route: RouteMatch,
+        pub route: RouteMatch,
     }
 }
 
@@ -641,11 +651,11 @@ pub mod listener_match {
     pub struct FilterChainMatch {
         // The name assigned to the filter chain.
         // No
-        name: String,
+        pub name: String,
 
         // The SNI value used by a filter chain’s match condition. This condition will evaluate to false if the filter chain has no sni match.
         // No
-        sni: String,
+        pub sni: String,
 
         // Applies only to SIDECAR_INBOUND context. If non-empty, a transport protocol to consider when determining a filter chain match. This value will be compared against the transport protocol of a new connection, when it’s detected by the tls_inspector listener filter.
         //
@@ -655,21 +665,24 @@ pub mod listener_match {
         // `tls` - set when TLS protocol is detected by the TLS inspector.
         //
         // No
-        transportProtocol: String,
+        #[serde(rename = "transportProtocol")]
+        pub transport_protocol: String,
 
         // Applies only to sidecars. If non-empty, a comma separated set of application protocols to consider when determining a filter chain match. This value will be compared against the application protocols of a new connection, when it’s detected by one of the listener filters such as the http_inspector.
         //
         // Accepted values include: h2, http/1.1, http/1.0
         // No
-        applicationProtocols: String,
+        #[serde(rename = "applicationProtocols")]
+        pub application_protocols: String,
 
         // The name of a specific filter to apply the patch to. Set this to envoy.filters.network.http_connection_manager to add a filter or apply a patch to the HTTP connection manager.
         // No
-        filter: FilterMatch,
+        pub filter: FilterMatch,
 
         // The destinationport value used by a filter chain’s match condition. This condition will evaluate to false if the filter chain has no destinationport match.
         // No
-        destinationPort: u32,
+        #[serde(rename = "destinationPort")]
+        pub destination_port: u32,
     }
 
     /// # FilterMatch
@@ -678,11 +691,12 @@ pub mod listener_match {
     pub struct FilterMatch {
         // The filter name to match on. For standard Envoy filters, canonical filter names should be used.
         // No
-        name: String,
+        pub name: String,
 
         // The next level filter within this filter to match upon. Typically used for HTTP Connection Manager filters and Thrift filters.
         // No
-        subFilter: SubFilterMatch,
+        #[serde(rename = "subFilter")]
+        pub sub_filter: SubFilterMatch,
     }
 
     /// # SubFilterMatch
@@ -691,7 +705,7 @@ pub mod listener_match {
     pub struct SubFilterMatch {
         // The filter name to match on.
         // No
-        name: String,
+        pub name: String,
     }
 }
 /// #ApplyTo

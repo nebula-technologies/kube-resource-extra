@@ -12,11 +12,11 @@ use std::collections::HashMap;
 pub struct Distribute {
     // Originating locality, `/` separated, e.g.`region / zone / sub_zone`.
     // Required: No
-    from: String,
+    pub from: Option<String>,
 
     // Map of upstream localities to traffic distribution weights.The sum of all weights should be 100.Any locality not present will receive no traffic.
     // Required: No
-    to: HashMap<String, u32>,
+    pub to: Option<HashMap<String, u32>>,
 }
 
 /// # Failover
@@ -25,9 +25,9 @@ pub struct Distribute {
 pub struct Failover {
     // Originating region.
     // No
-    from: String,
+    pub from: Option<String>,
 
     // Destination region the traffic will fail over to when endpoints in the ‘from’ region becomes unhealthy.
     // No
-    to: String,
+    pub to: Option<String>,
 }

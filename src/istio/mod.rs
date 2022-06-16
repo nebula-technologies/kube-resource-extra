@@ -26,7 +26,7 @@ pub mod google {
         pub struct UInt32Value {
             // The uint32 value.
             // No
-            value: Option<u32>,
+            pub value: Option<u32>,
         }
     }
     /// # Struct
@@ -34,7 +34,7 @@ pub mod google {
     /// The JSON representation for Struct is JSON object.
     #[derive(Clone, Debug, Serialize, Deserialize)]
     pub struct Struct {
-        fields: HashMap<String, Value>,
+        pub fields: HashMap<String, Value>,
     }
 }
 
@@ -44,5 +44,5 @@ pub mod google {
 pub struct WorkloadSelector {
     // One or more labels that indicate a specific set of pods/VMs on which the configuration should be applied. The scope of label search is restricted to the configuration namespace in which the the resource is present.
     // Yes
-    labels: HashMap<String, String>,
+    pub labels: HashMap<String, String>,
 }

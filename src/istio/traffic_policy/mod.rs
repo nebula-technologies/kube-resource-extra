@@ -9,21 +9,24 @@ use crate::istio::virtual_service::PortSelector;
 pub struct PortTrafficPolicy {
     // Specifies the number of a port on the destination service on which this policy is being applied.
     // No
-    port: Option<PortSelector>,
+    pub port: Option<PortSelector>,
 
     // Settings controlling the load balancer algorithms.
     // No
-    loadBalancer: Option<LoadBalancerSettings>,
+    #[serde(rename = "loadBalancer")]
+    pub load_balancer: Option<LoadBalancerSettings>,
 
     // Settings controlling the volume of connections to an upstream service
     // No
-    connectionPool: Option<ConnectionPoolSettings>,
+    #[serde(rename = "connectionPool")]
+    pub connection_pool: Option<ConnectionPoolSettings>,
 
     // Settings controlling eviction of unhealthy hosts from the load balancing pool
     // No
-    outlierDetection: Option<OutlierDetection>,
+    #[serde(rename = "outlierDetection")]
+    pub outlier_detection: Option<OutlierDetection>,
 
     // TLS related settings for connections to the upstream service.
     // No
-    tls: Option<ClientTLSSettings>,
+    pub tls: Option<ClientTLSSettings>,
 }

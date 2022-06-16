@@ -7,38 +7,46 @@ pub enum ConsistentHashLB {
     HttpHeaderName {
         // Hash based on a specific HTTP header.
         // Required: No
-        httpHeaderName: String,
+        #[serde(rename = "httpHeaderName")]
+        http_header_name: Option<String>,
 
         // The minimum number of virtual nodes to use for the hash ring. Defaults to 1024. Larger ring sizes result in more granular load distributions. If the number of hosts in the load balancing pool is larger than the ring size, each host will be assigned a single virtual node.
         // No
-        minimumRingSize: u64,
+        #[serde(rename = "minimumRingSize")]
+        minimum_ring_size: Option<u64>,
     },
     HttpCookie {
         // Hash based on HTTP cookie.
         // No
-        httpCookie: consistent_hash_lb::HTTPCookie,
+        #[serde(rename = "httpCookie")]
+        http_cookie: Option<consistent_hash_lb::HTTPCookie>,
 
         // The minimum number of virtual nodes to use for the hash ring. Defaults to 1024. Larger ring sizes result in more granular load distributions. If the number of hosts in the load balancing pool is larger than the ring size, each host will be assigned a single virtual node.
         // No
-        minimumRingSize: u64,
+        #[serde(rename = "minimumRingSize")]
+        minimum_ring_size: Option<u64>,
     },
     UseSourceIp {
         // Hash based on the source IP address. This is applicable for both TCP and HTTP connections.
         // No
-        useSourceIp: bool,
+        #[serde(rename = "useSourceIp")]
+        use_source_ip: Option<bool>,
 
         // The minimum number of virtual nodes to use for the hash ring. Defaults to 1024. Larger ring sizes result in more granular load distributions. If the number of hosts in the load balancing pool is larger than the ring size, each host will be assigned a single virtual node.
         // No
-        minimumRingSize: u64,
+        #[serde(rename = "minimumRingSize")]
+        minimum_ring_size: Option<u64>,
     },
     HttpQueryParameterName {
         // Hash based on a specific HTTP query parameter.
         // No
-        httpQueryParameterName: String,
+        #[serde(rename = "httpQueryParameterName")]
+        http_query_parameter_name: Option<String>,
 
         // The minimum number of virtual nodes to use for the hash ring. Defaults to 1024. Larger ring sizes result in more granular load distributions. If the number of hosts in the load balancing pool is larger than the ring size, each host will be assigned a single virtual node.
         // No
-        minimumRingSize: u64,
+        #[serde(rename = "minimumRingSize")]
+        minimum_ring_size: Option<u64>,
     },
 }
 

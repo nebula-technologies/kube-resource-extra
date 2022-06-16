@@ -41,7 +41,7 @@ impl Metadata for Gateway {
 pub struct GatewaySpec {
     /// A list of server specifications.
     /// Required: Yes
-    servers: Vec<Server>,
+    pub servers: Vec<Server>,
     /// One or more labels that indicate a specific set of pods/VMs on which this gateway
     /// configuration should be applied. By default workloads are searched across all namespaces
     /// based on label selectors. This implies that a gateway resource in the namespace “foo” can
@@ -52,7 +52,7 @@ pub struct GatewaySpec {
     /// same namespace as the gateway workload instance. If selector is nil, the Gateway will be
     /// applied to all workloads.
     /// Required: Yes
-    selector: HashMap<String, String>,
+    pub selector: HashMap<String, String>,
 }
 
 /// # Server
@@ -62,7 +62,7 @@ pub struct GatewaySpec {
 pub struct Server {
     /// The Port on which the proxy should listen for incoming connections.
     /// Required: Yes
-    port: Port,
+    pub port: Port,
 
     /// The ip or the Unix domain socket to which the listener should be bound to.
     /// Format: x.x.x.x or unix:///path/to/uds or unix://@foobar (Linux abstract namespace). When
@@ -71,7 +71,7 @@ pub struct Server {
     /// gateway needs to communicate to another mesh service e.g. publishing metrics. In such case,
     /// the server created with the specified bind will not be available to external gateway clients.
     /// Required: No
-    bind: Option<String>,
+    pub bind: Option<String>,
 
     /// One or more hosts exposed by this gateway. While typically applicable to HTTP services,
     /// it can also be used for TCP services using TLS with SNI. A host is specified as a
@@ -97,17 +97,17 @@ pub struct Server {
     /// Refer to the exportTo setting in VirtualService, DestinationRule, and ServiceEntry
     /// configurations for details.
     /// Required: Yes
-    hosts: Vec<String>,
+    pub hosts: Vec<String>,
 
     /// Set of TLS related options that govern the server’s behavior. Use these options to control
     /// if all http requests should be redirected to https, and the TLS modes to use.
     /// Required: No
-    tls: Option<ServerTLSSettings>,
+    pub tls: Option<ServerTLSSettings>,
 
     /// An optional name of the server, when set must be unique across all servers. This will be
     /// used for variety of purposes like prefixing stats generated with this name etc.
     /// Required: No
-    name: Option<String>,
+    pub name: Option<String>,
 }
 
 /// # Port
@@ -116,19 +116,20 @@ pub struct Server {
 pub struct Port {
     /// A valid non-negative integer port number.
     /// Required: Yes
-    number: i32,
+    pub number: i32,
 
     /// The protocol exposed on the port. MUST BE one of HTTP|HTTPS|GRPC|HTTP2|MONGO|TCP|TLS. TLS implies the connection will be routed based on the SNI header to the destination without terminating the TLS connection.
     /// Required: Yes
-    protocol: String,
+    pub protocol: String,
 
     /// Label assigned to the port.
     /// Required: Yes
-    name: String,
+    pub name: String,
 
     /// The port number on the endpoint where the traffic will be received. Applicable only when used with ServiceEntries.
     /// Required: No
-    targetPort: Option<u32>,
+    #[serde(rename = "targetPort")]
+    pub target_port: Option<u32>,
 }
 
 /// # ServerTLSSettings
@@ -136,55 +137,66 @@ pub struct Port {
 pub struct ServerTLSSettings {
     /// If set to true, the load balancer will send a 301 redirect for all http connections, asking the clients to use HTTPS.
     /// Required: No
-    httpsRedirect: Option<bool>,
+    #[serde(rename = "httpsRedirect")]
+    pub https_redirect: Option<bool>,
 
     /// Optional: Indicates whether connections to this port should be secured using TLS.The value of this field determines how TLS is enforced.
     /// No
-    mode: Option<TLSmode>,
+    pub mode: Option<TLSmode>,
 
     /// REQUIRED if mode is SIMPLE or MUTUAL.The path to the file holding the server - side TLS certificate to use.
     /// No
-    serverCertificate: Option<String>,
+    #[serde(rename = "serverCertificate")]
+    pub server_certificate: Option<String>,
 
     /// REQUIRED if mode is SIMPLE or MUTUAL.The path to the file holding the server’s private key.
     // Required: No
-    privateKey: Option<String>,
+    #[serde(rename = "privateKey")]
+    pub private_key: Option<String>,
 
     /// REQUIRED if mode is MUTUAL.The path to a file containing certificate authority certificates to use in verifying a presented client side certificate.
     /// Required: No
-    caCertificates: Option<String>,
+    #[serde(rename = "caCertificates")]
+    pub ca_certificates: Option<String>,
 
     /// For gateways running on Kubernetes, the name of the secret that holds the TLS certs including the CA certificates.Applicable only on Kubernetes.The secret (of type generic) should contain the following keys and values: key: < privateKey > and cert: < serverCert >.For mutual TLS,
     /// cacert: < CACertificate > can be provided in the same secret or a separate secret named < secret > - cacert.Secret of type tls for server certificates along with ca.crt key for CA certificates is also supported.Only one of server certificates and CA certificate or credentialName can be specified.
     /// Required: No
-    credentialName: Option<String>,
+    #[serde(rename = "credentialName")]
+    pub credential_name: Option<String>,
 
     /// A list of alternate names to verify the subject identity in the certificate presented by the client.
     /// Required: No
-    subjectAltNames: Option<Vec<String>>,
+    #[serde(rename = "subjectAltNames")]
+    pub subject_alt_names: Option<Vec<String>>,
 
     /// An optional list of base64 - encoded SHA - 256 hashes of the SKPIs of authorized client certificates.Note: When both verifycertificatehash and verifycertificatespki are specified,
     /// a hash matching either value will result in the certificate being accepted.
     /// Required: No
-    verifyCertificateSpki: Option<Vec<String>>,
+    #[serde(rename = "verifyCertificateSpki")]
+    pub verify_certificate_spki: Option<Vec<String>>,
 
     /// An optional list of hex - encoded SHA - 256 hashes of the authorized client certificates.Both simple and colon separated formats are acceptable.Note: When both verifycertificatehash and verifycertificatespki are specified,
     /// a hash matching either value will result in the certificate being accepted.
     /// Required: No
-    verifyCertificateHash: Option<Vec<String>>,
+    #[serde(rename = "verifyCertificateHash")]
+    pub verify_certificate_hash: Option<Vec<String>>,
 
     /// Optional: Minimum TLS protocol version.
     /// Required: No
-    minProtocolVersion: Option<TLSProtocol>,
+    #[serde(rename = "minProtocolVersion")]
+    pub min_protocol_version: Option<TLSProtocol>,
 
     /// Optional: Maximum TLS protocol version.
     /// Required: No
-    maxProtocolVersion: Option<TLSProtocol>,
+    #[serde(rename = "maxProtocolVersion")]
+    pub max_protocol_version: Option<TLSProtocol>,
 
     /// Optional: If specified,
     /// only support the specified cipher list.Otherwise default to the default cipher list supported by Envoy.
     /// Required: No
-    cipherSuites: Option<Vec<String>>,
+    #[serde(rename = "cipherSuites")]
+    pub cipher_suites: Option<Vec<String>>,
 }
 
 /// # ServerTLSSettings.TLSmode
