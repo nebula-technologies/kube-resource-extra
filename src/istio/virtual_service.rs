@@ -154,7 +154,8 @@ pub struct VirtualServiceSpec {
     //
     /// The value “.” is reserved and defines an export to the same namespace that the virtual service is declared in. Similarly the value “*” is reserved and defines an export to all namespaces.
     /// Required: No
-    pub exportTo: Option<Vec<String>>,
+    #[serde(rename = "exportTo")]
+    pub export_to: Option<Vec<String>>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -280,12 +281,14 @@ pub struct HttpRoute {
     /// Percentage of the traffic to be mirrored by the mirror field. If this field is absent, all
     /// the traffic (100%) will be mirrored. Max value is 100.
     /// Required: No
-    pub mirrorPercentage: Option<Percent>,
+    #[serde(rename = "mirrorPercentage")]
+    pub mirror_percentage: Option<Percent>,
 
     /// Cross-Origin Resource Sharing policy (CORS). Refer to CORS for further details about cross
     /// origin resource sharing.
     /// Required: No
-    pub corsPolicy: Option<CorsPolicy>,
+    #[serde(rename = "corsPolicy")]
+    pub cors_policy: Option<CorsPolicy>,
 
     /// Header manipulation rules
     /// Required: No
@@ -294,7 +297,8 @@ pub struct HttpRoute {
     /// Percentage of the traffic to be mirrored by the mirror field. Use of integer mirror_percent
     /// value is deprecated. Use the double mirror_percentage field instead
     /// Required: No
-    pub mirrorPercent: Option<i32>,
+    #[serde(rename = "mirrorPercent")]
+    pub mirror_percent: Option<i32>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -358,7 +362,8 @@ pub struct HttpMatchRequest {
 
     /// One or more labels that constrain the applicability of a rule to source (client) workloads with the given labels. If the VirtualService has a list of gateways specified in the top-level gateways field, it must include the reserved gateway mesh for this field to be applicable.
     /// Required: No
-    pub sourceLabels: Option<HashMap<String, String>>,
+    #[serde(rename = "sourceLabels")]
+    pub source_labels: Option<HashMap<String, String>>,
 
     /// Names of gateways where the rule should be applied. Gateway names in the top-level gateways field of the VirtualService (if any) are overridden. The gateway match is independent of sourceLabels.
     /// Required: No
@@ -373,21 +378,25 @@ pub struct HttpMatchRequest {
     //
     /// > Note: prefix matching is currently not supported.
     /// Required: No
-    pub queryParams: Option<HashMap<String, StringMatch>>,
+    #[serde(rename = "queryParams")]
+    pub query_params: Option<HashMap<String, StringMatch>>,
 
     /// Flag to specify whether the URI matching should be case-insensitive.
     //
     /// > Note: The case will be ignored only in the case of exact and prefix URI matches.
     /// Required: No
-    pub ignoreUriCase: Option<bool>,
+    #[serde(rename = "ignoreUriCase")]
+    pub ignore_uri_case: Option<bool>,
 
     /// withoutHeader has the same syntax with the header, but has opposite meaning. If a header is matched with a matching rule among withoutHeader, the traffic becomes not matched one.
     /// Required: No
-    pub withoutHeaders: Option<HashMap<String, StringMatch>>,
+    #[serde(rename = "withoutHeaders")]
+    pub without_headers: Option<HashMap<String, StringMatch>>,
 
     /// Source namespace constraining the applicability of a rule to workloads in that namespace. If the VirtualService has a list of gateways specified in the top-level gateways field, it must include the reserved gateway mesh for this field to be applicable.
     /// Required: No
-    pub sourceNamespace: Option<String>,
+    #[serde(rename = "sourceNamespace")]
+    pub source_namespace: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -405,7 +414,8 @@ pub struct RouteDestination {
 pub struct L4MatchAttributes {
     /// IPv4 or IPv6 ip addresses of destination with optional subnet. E.g., a.b.c.d/xx form or just a.b.c.d.
     /// Required: No
-    pub destinationSubnets: Option<Vec<String>>,
+    #[serde(rename = "destinationSubnets")]
+    pub destination_subnets: Option<Vec<String>>,
 
     /// Specifies the port on the host that is being addressed. Many services only expose a single port or label ports with the protocols they support, in these cases it is not required to explicitly select the port.
     /// Required: No
@@ -413,7 +423,8 @@ pub struct L4MatchAttributes {
 
     /// One or more labels that constrain the applicability of a rule to workloads with the given labels. If the VirtualService has a list of gateways specified in the top-level gateways field, it should include the reserved gateway mesh in order for this field to be applicable.
     /// Required: No
-    pub sourceLabels: Option<HashMap<String, String>>,
+    #[serde(rename = "sourceLabels")]
+    pub source_labels: Option<HashMap<String, String>>,
 
     /// Names of gateways where the rule should be applied. Gateway names in the top-level gateways field of the VirtualService (if any) are overridden. The gateway match is independent of sourceLabels.
     /// Required: No
@@ -421,18 +432,21 @@ pub struct L4MatchAttributes {
 
     /// Source namespace constraining the applicability of a rule to workloads in that namespace. If the VirtualService has a list of gateways specified in the top-level gateways field, it must include the reserved gateway mesh for this field to be applicable.
     /// Required: No
-    pub sourceNamespace: Option<String>,
+    #[serde(rename = "sourceNamespace")]
+    pub source_namespace: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct TlsMatchAttribures {
     /// SNI (server name indicator) to match on. Wildcard prefixes can be used in the SNI value, e.g., *.com will match foo.example.com as well as example.com. An SNI value must be a subset (i.e., fall within the domain) of the corresponding virtual serivce’s hosts.
     /// Required: Yes
-    pub sniHosts: Vec<String>,
+    #[serde(rename = "sniHosts")]
+    pub sni_hosts: Vec<String>,
 
     /// IPv4 or IPv6 ip addresses of destination with optional subnet. E.g., a.b.c.d/xx form or just a.b.c.d.
     /// Required: No
-    pub destinationSubnets: Option<Vec<String>>,
+    #[serde(rename = "destinationSubnets")]
+    pub destination_subnets: Option<Vec<String>>,
 
     /// Specifies the port on the host that is being addressed. Many services only expose a single port or label ports with the protocols they support, in these cases it is not required to explicitly select the port.
     /// Required: No
@@ -440,7 +454,8 @@ pub struct TlsMatchAttribures {
 
     /// One or more labels that constrain the applicability of a rule to workloads with the given labels. If the VirtualService has a list of gateways specified in the top-level gateways field, it should include the reserved gateway mesh in order for this field to be applicable.
     /// Required: No
-    pub sourceLabels: Option<HashMap<String, String>>,
+    #[serde(rename = "sourceLabels")]
+    pub source_labels: Option<HashMap<String, String>>,
 
     /// Names of gateways where the rule should be applied. Gateway names in the top-level gateways field of the VirtualService (if any) are overridden. The gateway match is independent of sourceLabels.
     /// Required: No
@@ -448,7 +463,8 @@ pub struct TlsMatchAttribures {
 
     /// Source namespace constraining the applicability of a rule to workloads in that namespace. If the VirtualService has a list of gateways specified in the top-level gateways field, it must include the reserved gateway mesh for this field to be applicable.
     /// Required: No
-    pub sourceNamespace: Option<String>,
+    #[serde(rename = "sourceNamespace")]
+    pub source_namespace: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -467,7 +483,8 @@ pub struct HttpRedirect {
 
     /// On a redirect, dynamically set the port: * FROMPROTOCOLDEFAULT: automatically set to 80 for HTTP and 443 for HTTPS. * FROMREQUESTPORT: automatically use the port of the request.
     /// Required: No,
-    pub derivePort: Option<RedirectPortSelection>,
+    #[serde(rename = "derivePort")]
+    pub derive_port: Option<RedirectPortSelection>,
 
     /// On a redirect, overwrite the scheme portion of the URL with this value. For example, http or https. If unset, the original scheme will be used. If derivePort is set to FROM_PROTOCOL_DEFAULT, this will impact the port used as well
     /// Required: No
@@ -475,7 +492,8 @@ pub struct HttpRedirect {
 
     /// On a redirect, Specifies the HTTP status code to use in the redirect response. The default response code is MOVED_PERMANENTLY (301).
     /// Required: No
-    pub redirectCode: Option<i32>,
+    #[serde(rename = "redirectCode")]
+    pub redirect_code: Option<i32>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -507,13 +525,16 @@ pub struct HttpRewrite {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum StringMatch {
     /// exact string match
-    exact(String),
+    #[serde(rename = "exact")]
+    Exact(String),
 
     /// prefix-based match
-    prefix(String),
+    #[serde(rename = "prefix")]
+    Prefix(String),
 
     /// RE2 style regex-based match (https://github.com/google/re2/wiki/Syntax).
-    regex(String),
+    #[serde(rename = "regex")]
+    Regex(String),
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -524,15 +545,18 @@ pub struct HttpRetry {
 
     /// Timeout per attempt for a given request, including the initial call and any retries. Format: 1h/1m/1s/1ms. MUST BE >=1ms. Default is same value as request timeout of the HTTP route, which means no timeout.
     /// Required: No
-    pub perTryTimeout: Option<Duration>,
+    #[serde(rename = "perTryTimeout")]
+    pub per_try_timeout: Option<Duration>,
 
     /// Specifies the conditions under which retry takes place. One or more policies can be specified using a ‘,’ delimited list. If retry_on specifies a valid HTTP status, it will be added to retriablestatuscodes retry policy. See the retry policies and gRPC retry policies for more details.
     /// Required: No
-    pub retryOn: Option<String>,
+    #[serde(rename = "retryOn")]
+    pub retry_on: Option<String>,
 
     /// Flag to specify whether the retries should retry to other localities. See the retry plugin configuration for more details.
     /// Required: No
-    pub retryRemoteLocalities: Option<bool>,
+    #[serde(rename = "retryRemoteLocalities")]
+    pub retry_remote_localities: Option<bool>,
 }
 
 /// Cross-Origin Resource Sharing policy (CORS).
@@ -540,27 +564,33 @@ pub struct HttpRetry {
 pub struct CorsPolicy {
     /// String patterns that match allowed origins. An origin is allowed if any of the string matchers match. If a match is found, then the outgoing Access-Control-Allow-Origin would be set to the origin as provided by the client.
     /// Required: No
-    pub allowOrigins: Option<Vec<StringMatch>>,
+    #[serde(rename = "allowOrigins")]
+    pub allow_origins: Option<Vec<StringMatch>>,
 
     /// List of HTTP methods allowed to access the resource. The content will be serialized into the Access-Control-Allow-Methods header.
     /// Required: No
-    pub allowMethods: Option<Vec<String>>,
+    #[serde(rename = "allowMethods")]
+    pub allow_methods: Option<Vec<String>>,
 
     /// List of HTTP headers that can be used when requesting the resource. Serialized to Access-Control-Allow-Headers header.
     /// Required: No
-    pub allowHeaders: Option<Vec<String>>,
+    #[serde(rename = "allowHeaders")]
+    pub allow_headers: Option<Vec<String>>,
 
     /// A list of HTTP headers that the browsers are allowed to access. Serialized into Access-Control-Expose-Headers header.
     /// Required: No
-    pub exposeHeaders: Option<Vec<String>>,
+    #[serde(rename = "exposeHeaders")]
+    pub expose_headers: Option<Vec<String>>,
 
     /// Specifies how long the results of a preflight request can be cached. Translates to the Access-Control-Max-Age header.
     /// Required: No
-    pub maxAge: Option<Duration>,
+    #[serde(rename = "maxAge")]
+    pub max_age: Option<Duration>,
 
     /// Indicates whether the caller is allowed to send the actual request (not the preflight) using credentials. Translates to Access-Control-Allow-Credentials header.
     /// Required: No
-    pub allowCredentials: Option<bool>,
+    #[serde(rename = "allowCredentials")]
+    pub allow_credentials: Option<bool>,
 }
 
 //// # HTTPFaultInjection
@@ -586,7 +616,13 @@ pub struct PortSelector {
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
-pub struct Percent(f32);
+pub struct Percent(pub f32);
+
+impl From<f32> for Percent {
+    fn from(value: f32) -> Self {
+        Percent(value)
+    }
+}
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct HeaderOperations {

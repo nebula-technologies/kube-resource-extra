@@ -1,6 +1,6 @@
 [package]
 name = "kube-resource-extras"
-version = "0.1.1"
+version = "0.2.0"
 edition = "2021"
 authors = ["Anders Blenstrup-Pedersen <abp-git@ryuu.technology>"]
 description = "Kubernetes Resource Extras"
