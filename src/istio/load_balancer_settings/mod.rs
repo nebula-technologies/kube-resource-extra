@@ -2,6 +2,7 @@ pub mod consistent_hash_lb;
 
 /// # ConsistentHashLB
 /// Consistent Hash-based load balancing can be used to provide soft session affinity based on HTTP headers, cookies or other properties. The affinity to a particular destination host will be lost when one or more hosts are added/removed from the destination service.
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum ConsistentHashLB {
     HttpHeaderName {
@@ -52,6 +53,7 @@ pub enum ConsistentHashLB {
 
 /// # SimpleLB
 /// Standard load balancing algorithms that require no tuning.
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum SimpleLB {
     // Round Robin policy. Default

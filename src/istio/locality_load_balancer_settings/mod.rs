@@ -8,6 +8,7 @@ use std::collections::HashMap;
 /// `us-west/*` - all zones and sub-zones within the us-west region
 ///
 /// `us-west/zone-1/*` - all sub-zones within us-west/zone-1
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Distribute {
     // Originating locality, `/` separated, e.g.`region / zone / sub_zone`.
@@ -21,6 +22,7 @@ pub struct Distribute {
 
 /// # Failover
 /// Specify the traffic failover policy across regions. Since zone and sub-zone failover is supported by default this only needs to be specified for regions when the operator needs to constrain traffic failover so that the default behavior of failing over to any endpoint globally does not apply. This is useful when failing over traffic across regions would not improve service health or may need to be restricted for other reasons like regulatory controls.
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Failover {
     // Originating region.

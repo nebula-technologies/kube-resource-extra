@@ -5,6 +5,7 @@ pub mod tcp_settings;
 
 /// # TCPSettings
 /// Settings common to both HTTP and TCP upstream connections.
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct TCPSettings {
     // Maximum number of HTTP1 /TCP connections to a destination host. Default 2^32-1.
@@ -25,6 +26,7 @@ pub struct TCPSettings {
 
 /// #HTTPSettings
 /// Settings applicable to HTTP1.1/HTTP2/GRPC connections.
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct HTTPSettings {
     // Maximum number of pending HTTP requests to a destination. Default 2^32-1.

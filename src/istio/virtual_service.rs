@@ -2,6 +2,7 @@ use k8s_openapi::{Metadata, Resource};
 use std::collections::HashMap;
 use std::time::Duration;
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct VirtualService {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
@@ -118,6 +119,7 @@ impl Metadata for VirtualService {
 /// ```
 /// # VirtualService
 /// Configuration affecting traffic routing.
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct VirtualServiceSpec {
     /// The destination hosts to which traffic is being sent. Could be a DNS name with wildcard prefix or an IP address. Depending on the platform, short-names can also be used instead of a FQDN (i.e. has no dots in the name). In such a scenario, the FQDN of the host would be derived based on the underlying platform.
@@ -158,6 +160,7 @@ pub struct VirtualServiceSpec {
     pub export_to: Option<Vec<String>>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct Destination {
     /// The name of a service from the service registry. Service names are looked up from the platform’s service registry (e.g., Kubernetes services, Consul services, etc.) and from the hosts declared by ServiceEntry. Traffic forwarded to destinations that are not found in either of the two, will be dropped.
@@ -175,6 +178,7 @@ pub struct Destination {
     pub port: Option<PortSelector>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct Delegate {
     /// Name specifies the name of the delegate VirtualService.
@@ -186,6 +190,7 @@ pub struct Delegate {
     pub namespace: Option<String>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct Headers {
     /// Header manipulation rules to apply before forwarding a request to the destination service
@@ -196,6 +201,7 @@ pub struct Headers {
     pub response: Option<HeaderOperations>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct TlsRoute {
     /// Match conditions to be satisfied for the rule to be activated. All conditions inside a single
@@ -208,6 +214,7 @@ pub struct TlsRoute {
     pub route: Option<Vec<RouteDestination>>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct TcpRoute {
     /// Match conditions to be satisfied for the rule to be activated. All conditions inside a single
@@ -220,6 +227,7 @@ pub struct TcpRoute {
     pub route: Option<Vec<RouteDestination>>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct HttpRoute {
     /// The name assigned to the route for debugging purposes. The route’s name will be concatenated
@@ -301,6 +309,7 @@ pub struct HttpRoute {
     pub mirror_percent: Option<i32>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct HttpMatchRequest {
     /// The name assigned to a match. The match’s name will be concatenated with the parent route’s name and will be logged in the access logs for requests matching this route.
@@ -399,6 +408,7 @@ pub struct HttpMatchRequest {
     pub source_namespace: Option<String>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct RouteDestination {
     /// Destination uniquely identifies the instances of a service to which the request/connection should be forwarded to.
@@ -410,6 +420,7 @@ pub struct RouteDestination {
     pub weight: Option<i32>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct L4MatchAttributes {
     /// IPv4 or IPv6 ip addresses of destination with optional subnet. E.g., a.b.c.d/xx form or just a.b.c.d.
@@ -436,6 +447,7 @@ pub struct L4MatchAttributes {
     pub source_namespace: Option<String>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct TlsMatchAttribures {
     /// SNI (server name indicator) to match on. Wildcard prefixes can be used in the SNI value, e.g., *.com will match foo.example.com as well as example.com. An SNI value must be a subset (i.e., fall within the domain) of the corresponding virtual serivce’s hosts.
@@ -467,6 +479,7 @@ pub struct TlsMatchAttribures {
     pub source_namespace: Option<String>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct HttpRedirect {
     /// On a redirect, overwrite the Path portion of the URL with this value. Note that the entire path will be replaced, irrespective of the request URI being matched as an exact path or prefix.
@@ -496,6 +509,7 @@ pub struct HttpRedirect {
     pub redirect_code: Option<i32>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct HttpRouteDestination {
     /// Destination uniquely identifies the instances of a service to which the request/connection should be forwarded to.
@@ -511,6 +525,7 @@ pub struct HttpRouteDestination {
     pub headers: Option<Headers>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct HttpRewrite {
     /// rewrite the path (or the prefix) portion of the URI with this value. If the original URI was matched based on prefix, the value provided in this field will replace the corresponding matched prefix.
@@ -522,6 +537,7 @@ pub struct HttpRewrite {
     pub authority: Option<String>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub enum StringMatch {
     /// exact string match
@@ -537,6 +553,7 @@ pub enum StringMatch {
     Regex(String),
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct HttpRetry {
     /// Number of retries to be allowed for a given request. The interval between retries will be determined automatically (25ms+). When request timeout of the HTTP route or per_try_timeout is configured, the actual number of retries attempted also depends on the specified request timeout and per_try_timeout values.
@@ -560,6 +577,7 @@ pub struct HttpRetry {
 }
 
 /// Cross-Origin Resource Sharing policy (CORS).
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct CorsPolicy {
     /// String patterns that match allowed origins. An origin is allowed if any of the string matchers match. If a match is found, then the outgoing Access-Control-Allow-Origin would be set to the origin as provided by the client.
@@ -597,6 +615,7 @@ pub struct CorsPolicy {
 //// HTTPFaultInjection can be used to specify one or more faults to inject while forwarding HTTP requests to the destination specified in a route. Fault specification is part of a VirtualService rule. Faults include aborting the Http request from downstream service, and/or delaying proxying of requests. A fault rule MUST HAVE delay or abort or both.
 ///
 //// > Note: Delay and abort faults are independent of one another, even if both are specified simultaneously.
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct HttpFaultInjection {
     /// Delay requests before forwarding, emulating various failures such as network issues, overloaded upstream service, etc.
@@ -608,6 +627,7 @@ pub struct HttpFaultInjection {
     pub abort: Option<FaultInjectionAbort>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct PortSelector {
     /// Valid port number
@@ -615,6 +635,7 @@ pub struct PortSelector {
     pub number: Option<u32>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 pub struct Percent(pub f32);
 
@@ -626,6 +647,7 @@ impl From<f32> for Percent {
 
 impl Eq for Percent {}
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct HeaderOperations {
     /// Overwrite the headers specified by key with the given values
@@ -641,6 +663,7 @@ pub struct HeaderOperations {
     pub remove: Option<Vec<String>>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct FaultInjectionDelay {
     /// Add a fixed delay before forwarding the request. Format: 1h/1m/1s/1ms. MUST be >=1ms.
@@ -657,6 +680,7 @@ pub struct FaultInjectionDelay {
     pub percent: Option<i32>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub struct FaultInjectionAbort {
     /// HTTP status code to use to abort the Http request.
@@ -669,6 +693,7 @@ pub struct FaultInjectionAbort {
     pub percentage: Option<Percent>,
 }
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 pub enum RedirectPortSelection {
     #[serde(rename = "FROM_PROTOCOL_DEFAULT")]

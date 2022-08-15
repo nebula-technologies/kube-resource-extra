@@ -2,6 +2,7 @@ use std::time::Duration;
 
 /// # TcpKeepalive
 /// TCP keepalive.
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct TcpKeepalive {
 

@@ -1,6 +1,6 @@
 [package]
 name = "kube-resource-extras"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2021"
 authors = ["Anders Blenstrup-Pedersen <abp-git@ryuu.technology>"]
 description = "Kubernetes Resource Extras"
@@ -21,6 +21,7 @@ serde_derive = "1.0.137"
 k8s-openapi = { version = "0.14.0", default-features = false, features = ["v1_22"] }
 kube-core = "0.71.0"
 kube = { version = "0.71.0", features = ["runtime","derive", "admission"] }
+serde_with = "2.0.0"
 
 [dev-dependencies]
 tokio = {version = "1.18.2", features = ["rt"]}

@@ -1,5 +1,6 @@
 /// # TLSMode
 /// TLS connection mode
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum TLSmode {
     // Do not setup a TLS connection to the upstream endpoint.

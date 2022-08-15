@@ -1,6 +1,7 @@
 use k8s_openapi::{Metadata, Resource};
 use std::collections::HashMap;
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Gateway {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
@@ -37,6 +38,7 @@ impl Metadata for Gateway {
 /// # Gateway
 ///
 /// Gateway describes a load balancer operating at the edge of the mesh receiving incoming or outgoing HTTP/TCP connections.
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct GatewaySpec {
     /// A list of server specifications.
@@ -58,6 +60,7 @@ pub struct GatewaySpec {
 /// # Server
 ///
 /// Server describes the properties of the proxy on a given load balancer port. For example,
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Server {
     /// The Port on which the proxy should listen for incoming connections.
@@ -112,6 +115,7 @@ pub struct Server {
 
 /// # Port
 /// Port describes the properties of a specific port of a service.
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Port {
     /// A valid non-negative integer port number.
@@ -133,6 +137,7 @@ pub struct Port {
 }
 
 /// # ServerTLSSettings
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct ServerTLSSettings {
     /// If set to true, the load balancer will send a 301 redirect for all http connections, asking the clients to use HTTPS.
@@ -201,6 +206,7 @@ pub struct ServerTLSSettings {
 
 /// # ServerTLSSettings.TLSmode
 /// TLS modes enforced by the proxy
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum TLSmode {
     /// The SNI string presented by the client will be used as the match criterion in a VirtualService TLS route to determine the destination service from the service registry.
@@ -221,6 +227,7 @@ pub enum TLSmode {
 
 /// # ServerTLSSettings.TLSProtocol
 /// TLS protocol versions.
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum TLSProtocol {
     /// Automatically choose the optimal TLS version.

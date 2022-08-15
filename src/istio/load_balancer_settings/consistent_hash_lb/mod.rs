@@ -2,6 +2,7 @@ use std::time::Duration;
 
 /// # HTTPCookie
 /// Describes a HTTP cookie that will be used as the hash key for the Consistent Hash load balancer. If the cookie is not present, it will be generated.
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct HTTPCookie {
     // Name of the cookie.

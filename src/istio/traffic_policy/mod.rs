@@ -5,6 +5,7 @@ use crate::istio::virtual_service::PortSelector;
 
 /// # PortTrafficPolicy
 /// Traffic policies that apply to specific ports of the service
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct PortTrafficPolicy {
     // Specifies the number of a port on the destination service on which this policy is being applied.

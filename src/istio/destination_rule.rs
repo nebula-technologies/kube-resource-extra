@@ -57,6 +57,7 @@ use k8s_openapi::{Metadata, Resource};
 use std::collections::HashMap;
 use std::time::Duration;
 
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct DestinationRule {
     /// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
@@ -92,6 +93,7 @@ impl Metadata for DestinationRule {
 
 /// # DestinationRuleSpec
 /// DestinationRule defines policies that apply to traffic intended for a service after routing has occurred.
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct DestinationRuleSpec {
     // The name of a service from the service registry.Service names are looked up from the platform’s service registry (e.g.,
@@ -134,6 +136,7 @@ pub struct DestinationRuleSpec {
 /// # TrafficPolicy
 ///
 /// Traffic policies to apply for a specific destination, across all destination ports. See DestinationRule for examples.
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct TrafficPolicy {
     // Settings controlling the load balancer algorithms.
@@ -185,6 +188,7 @@ pub struct TrafficPolicy {
 /// Note: Policies specified for subsets will not take effect until a route rule explicitly sends traffic to this subset.
 ///
 /// One or more labels are typically required to identify the subset destination, however, when the corresponding DestinationRule represents a host that supports multiple SNI hosts (e.g., an egress gateway), a subset without labels may be meaningful. In this case a traffic policy with ClientTLSSettings can be used to identify a specific SNI host corresponding to the named subset.
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Subset {
     // Name of the subset.The service name and the subset name can be used for traffic splitting in a route rule.
@@ -231,6 +235,7 @@ pub struct Subset {
 ///           name: user
 ///           ttl: 0s
 /// ```
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum LoadBalancerSettings {
     Simple {
@@ -271,6 +276,7 @@ pub enum LoadBalancerSettings {
 ///           time: 7200s
 ///           interval: 75s
 /// ```
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct ConnectionPoolSettings {
     // Settings common to both HTTP and TCP upstream connections.
@@ -305,6 +311,7 @@ pub struct ConnectionPoolSettings {
 ///       interval: 5m
 ///       baseEjectionTime: 15m
 /// ```
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct OutlierDetection {
     // Determines whether to distinguish local origin failures from external errors.If set to true consecutivelocalorigin_failure is taken into account for outlier detection calculations.This should be used when you want to derive the outlier detection status based on the errors seen locally such as failure to connect,
@@ -405,6 +412,7 @@ pub struct OutlierDetection {
 ///     tls:
 ///       mode: ISTIO_MUTUAL
 /// ```
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct ClientTLSSettings {
     // Indicates whether connections to this port should be secured using TLS.The value of this field determines how TLS is enforced.
@@ -486,6 +494,7 @@ pub struct ClientTLSSettings {
 ///      to: us-east
 /// ```
 /// Locality load balancing settings.
+#[skip_serializing_none]
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct LocalityLoadBalancerSetting {
     // Optional: only one of distribute, failover or failoverPriority can be set. Explicitly specify loadbalancing weight across different zones and geographical locations. Refer to Locality weighted load balancing If empty, the locality weight is set according to the endpoints number within it.
